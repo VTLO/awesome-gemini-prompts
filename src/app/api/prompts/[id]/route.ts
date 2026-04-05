@@ -1,16 +1,8 @@
-import { promises as fs } from 'fs';
-import path from 'path';
 import { NextRequest, NextResponse } from 'next/server';
-import { GeminiPrompt } from '@/schema/prompt';
 import { withCors, corsOptions } from '@/lib/cors';
+import { loadPrompts } from '@/lib/prompts';
 
 export const dynamic = 'force-dynamic';
-
-async function loadPrompts(): Promise<GeminiPrompt[]> {
-  const filePath = path.join(process.cwd(), 'data', 'prompts.json');
-  const raw = await fs.readFile(filePath, 'utf8');
-  return JSON.parse(raw) as GeminiPrompt[];
-}
 
 export async function OPTIONS() {
   return corsOptions();
